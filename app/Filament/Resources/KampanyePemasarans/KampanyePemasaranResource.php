@@ -20,10 +20,13 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class KampanyePemasaranResource extends Resource
 {
-    protected static ?string $model = KampanyePemasaran::class;
+    protected static string|UnitEnum|null $navigationGroup = 'Pemasaran';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $model = KampanyePemasaran::class;   
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMegaphone;
 

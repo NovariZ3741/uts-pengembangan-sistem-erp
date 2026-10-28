@@ -13,15 +13,18 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ProspekPelangganResource extends Resource
 {
+    protected static string|UnitEnum|null $navigationGroup = 'Pemasaran';
+   protected static ?int $navigationSort = 2;
     protected static ?string $model = ProspekPelanggan::class;
 
     protected static ?string $navigationLabel = 'Prospek Pelanggan';
 
     protected static ?string $modelLabel = 'Prospek Pelanggan';
-    
+
     protected static ?string $pluralModelLabel = 'Prospek Pelanggan';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
