@@ -1,58 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ERP PT Neosantara Group
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Platform Enterprise Resource Planning (ERP) terpadu untuk **PT Neosantara Group**, perusahaan distributor dan retail nasional. Aplikasi ini mengintegrasikan proses bisnis mulai dari **pencarian prospek pelanggan**, **kampanye pemasaran**, hingga **pengelolaan stok barang di gudang**.
 
-## About Laravel
+Proyek ini dibuat sebagai tugas Ujian Tengah Semester (UTS) mata kuliah Pengembangan Sistem ERP.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Komponen | Versi |
+|---|---|
+| PHP | 8.3 |
+| Laravel | 13 |
+| Filament (Panel Builder) | 5.x |
+| Livewire | 4.x |
+| Database | SQLite |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Fitur
 
-## Learning Laravel
+### 1. Pengelolaan Stok Barang
+- **Produk**: SKU, nama, kategori, harga (Rupiah), dan stok minimum. Total stok dihitung otomatis dari riwayat pergerakan, dengan badge merah jika stok kurang dari atau sama dengan batas minimum.
+- **Gudang**: data gudang beserta lokasinya.
+- **Pergerakan Stok**: pencatatan **barang masuk** dan **barang keluar** per gudang. Barang keluar ditolak jika stok di gudang tidak mencukupi. Riwayat tidak dapat diedit agar jejak audit tetap utuh.
+- **Widget Stok Menipis** di dashboard untuk produk yang stoknya sudah di bawah atau sama dengan batas minimum.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. Kampanye Pemasaran
+- Pengelolaan kampanye: nama, jenis (email, media sosial, event, promo), status (draft, aktif, selesai, batal), periode, anggaran, dan target prospek.
+- Kampanye dapat dikaitkan dengan **produk yang dipromosikan**.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Prospek Pelanggan
+- Pencatatan calon pelanggan (nama, perusahaan, kontak, status, catatan).
+- Setiap prospek dapat dikaitkan dengan **kampanye** asalnya.
+- Widget ringkasan pemasaran di dashboard.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Keterkaitan Antar Modul
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+Kampanye Pemasaran ──< Prospek Pelanggan
+        │
+        └──< Produk ──< Pergerakan Stok >── Gudang
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Kampanye mempromosikan produk, prospek berasal dari kampanye, dan stok produk dipantau lewat pergerakan stok di gudang.
 
-## Contributing
+## Instalasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Prasyarat
+- PHP 8.3 dengan ekstensi `sqlite3`, `mbstring`, `openssl`, `fileinfo`
+- Composer
+- Node.js dan npm (hanya jika ingin build aset)
+- Git
 
-## Code of Conduct
+### Langkah
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# 1. Clone repository
+git clone https://github.com/NovariZ3741/uts-pengembangan-sistem-erp.git
+cd uts-pengembangan-sistem-erp
 
-## Security Vulnerabilities
+# 2. Install dependensi
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Siapkan environment
+cp .env.example .env
+php artisan key:generate
 
-## License
+# 4. Siapkan database SQLite
+touch database/database.sqlite
+# Windows PowerShell: New-Item database/database.sqlite -ItemType File
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 5. Jalankan migration dan seeder
+php artisan migrate --seed
+
+# 6. Jalankan aplikasi
+php artisan serve
+```
+
+Pastikan `.env` memakai konfigurasi berikut:
+
+```env
+DB_CONNECTION=sqlite
+```
+
+Aplikasi dapat dibuka di **http://127.0.0.1:8000/admin**.
+
+## Akun Login
+
+| Email | Password |
+|---|---|
+| `admin@example.test` | `password` |
+
+Jika akun belum ada, buat dengan:
+
+```bash
+php artisan make:filament-user
+```
+
+## Struktur Modul
+
+```
+app/
+├── Filament/
+│   ├── Resources/
+│   │   ├── Products/              # Produk
+│   │   ├── Warehouses/            # Gudang
+│   │   ├── StockMovements/        # Barang masuk / keluar
+│   │   ├── KampanyePemasarans/    # Kampanye pemasaran
+│   │   └── ProspekPelanggans/     # Prospek pelanggan
+│   └── Widgets/
+│       ├── LowStock.php           # Stok menipis
+│       └── RingkasanPemasaran.php # Ringkasan pemasaran
+└── Models/
+database/
+├── migrations/
+└── seeders/
+```
+
+## Pembagian Tim
+
+| Anggota | Branch | Modul |
+|---|---|---|
+| NovariZ | `stok-barang` | Produk, Gudang, Pergerakan Stok, widget Stok Menipis |
+| Luthfi | `kampanye-pemasaran`, `prospek-pelanggan` | Kampanye Pemasaran, Prospek Pelanggan |
+
+## Alur Demo
+
+1. Buat **kampanye** dan pilih prospek.
+2. Catat **prospek** yang berasal dari kampanye tersebut.
+3. Ubah status prospek sesuai perkembangan.
+4. Catat **barang masuk** untuk produk di gudang, lalu cek total stok di halaman Produk.
+5. Catat **barang keluar** dan amati badge stok serta widget **Stok Menipis** di dashboard.
+
+## Catatan Pengembangan
+
+ <img width="1366" height="768" alt="Screenshot (256)" src="https://github.com/user-attachments/assets/92c4d75c-2f50-4fc6-9ab9-f677129a772d" />
+<img width="1366" height="768" alt="Screenshot (255)" src="https://github.com/user-attachments/assets/d39f8e18-a05d-4888-a037-282890cb89b4" />
+<img width="1366" height="768" alt="Screenshot (254)" src="https://github.com/user-attachments/assets/f2593eca-3d4a-4814-83a8-203fa6936af5" />
+<img width="1366" height="768" alt="Screenshot (253)" src="https://github.com/user-attachments/assets/264ede2d-e5ba-4b4a-9485-d2e1a2feeaee" />
+<img width="1366" height="768" alt="Screenshot (252)" src="https://github.com/user-attachments/assets/cc80e62c-9116-46d9-b7d8-5a40f1f2189e" />
+<img width="1366" height="768" alt="Screenshot (251)" src="https://github.com/user-attachments/assets/134721a0-327e-4886-8d0d-4e51fc83ba73" />
