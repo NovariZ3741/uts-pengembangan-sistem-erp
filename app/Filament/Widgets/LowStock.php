@@ -17,7 +17,7 @@ class LowStock extends TableWidget
             ->heading('Stok menipis')
             ->query(Product::query()
                 ->withSum('movements', 'quantity')
-                ->havingRaw('coalesce(movement_sum_quantity, 0)<= min_stock'))
+                ->whereRaw('coalesce(movements_sum_quantity, 0)<= min_stock'))
             ->columns([
                 TextColumn::make('name')->label('Produk'),
                 TextColumn::make('movements_sum_quantity')->label('Stok')->default(0)->badge()->color('danger'),
