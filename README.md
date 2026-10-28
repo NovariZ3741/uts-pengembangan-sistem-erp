@@ -131,9 +131,3 @@ database/
 
 ## Catatan Pengembangan
 
- <img width="1366" height="768" alt="Screenshot (256)" src="https://github.com/user-attachments/assets/92c4d75c-2f50-4fc6-9ab9-f677129a772d" />
-<img width="1366" height="768" alt="Screenshot (255)" src="https://github.com/user-attachments/assets/d39f8e18-a05d-4888-a037-282890cb89b4" />
-<img width="1366" height="768" alt="Screenshot (254)" src="https://github.com/user-attachments/assets/f2593eca-3d4a-4814-83a8-203fa6936af5" />
-<img width="1366" height="768" alt="Screenshot (253)" src="https://github.com/user-attachments/assets/264ede2d-e5ba-4b4a-9485-d2e1a2feeaee" />
-<img width="1366" height="768" alt="Screenshot (252)" src="https://github.com/user-attachments/assets/cc80e62c-9116-46d9-b7d8-5a40f1f2189e" />
-<img width="1366" height="768" alt="Screenshot (251)" src="https://github.com/user-attachments/assets/134721a0-327e-4886-8d0d-4e51fc83ba73" />
