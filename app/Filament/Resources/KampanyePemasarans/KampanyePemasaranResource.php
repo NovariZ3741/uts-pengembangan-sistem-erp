@@ -59,7 +59,7 @@ class KampanyePemasaranResource extends Resource
             DatePicker::make('tanggal_selesai')->required()->afterOrEqual('tanggal_mulai'),
             TextInput::make('anggaran')->numeric()->prefix('Rp')->default(0),
             TextInput::make('target_prospek')->numeric()->default(0),
-            TextInput::make('prospek_terkumpul')->numeric()->default(0),
+            TextInput::make('prospek_terkumpul')->label('Prospek Terkumpul')->numeric()->default(0),
             Textarea::make('deskripsi')->columnSpanFull(),
         ]);
     }
@@ -81,7 +81,7 @@ class KampanyePemasaranResource extends Resource
                 TextColumn::make('tanggal_mulai')->date('d M Y')->sortable(),
                 TextColumn::make('tanggal_selesai')->date('d M Y')->sortable(),
                 TextColumn::make('anggaran')->money('IDR')->sortable(),
-                TextColumn::make('prospek_terkumpul')->label('Prospek'),
+                TextColumn::make('prospek_terkumpul')->label('Prospek Terkumpul')->alignCenter(),
             ])
             ->filters([
                 SelectFilter::make('status')->options([
